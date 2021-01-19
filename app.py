@@ -1,12 +1,30 @@
-from flask import Flask
+from flask import Flask, render_template
+from data import Articles
 
 app = Flask(__name__)
 
+Articles = Articles()
+
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def index():
+    return render_template('home.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/articles')
+def articles():
+    return render_template('articles.html', articles=Articles)
+
+
+@app.route('/article/<string:a_id>')
+def article(a_id):
+    return render_template('article.html', id=a_id)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
